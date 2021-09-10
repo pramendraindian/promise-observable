@@ -3,20 +3,22 @@ import { Observable } from 'rxjs';
 import { HttpClient, JsonpClientBackend } from '@angular/common/http';
 import { User } from './model/User';
 import { PromiseService } from './services/promise.service';
-
+import { RxJsTricksService } from './services/rx-js-tricks.service';
+import { concatMap, tap } from 'rxjs/operators';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent  implements OnInit {
-  constructor(private ps:PromiseService)
+  constructor(private ps:PromiseService, private rx:RxJsTricksService,private http:HttpClient)
   {
 
   }
   users:User[]=[];
   ngOnInit(): void {
-    this.getHttpPromise();
+    this.getUserDetailsById();
+    //this.getHttpPromise();
     // this.promiseBasics();
     // this.basicObservable();
   }
@@ -75,8 +77,26 @@ export class AppComponent  implements OnInit {
     catch((err)=>{console.log(err)}).
     finally(()=>console.log("http promise complete"));
   }
+
+  CallUserId(userId:any)
+  {
+   
+    this.rx.userId.next(userId);
+  }
+
+  getUserDetailsById()
+  {
+    this.rx.getUserById().subscribe(
+     (user) =>  {console.log(user);}
+     ,(err) => {console.log(err);}      
+  );
+  }
+
+
   
  
 
 }
+
+
 
