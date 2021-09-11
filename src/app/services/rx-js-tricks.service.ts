@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { concatMap, map, startWith, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { catchError, concatMap, debounceTime, distinctUntilChanged, map, startWith, switchMap, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,28 @@ export class RxJsTricksService {
     return res;
   }
 
-  getLazySearch(searchTerm:string):Observable<any>
+
+
+  searchUsingSwitchMap(searchStream:Observable<any>):Observable<any>
+  {
+   const serachResult= searchStream.pipe(
+      tap(emit=>console.log("emitting#"+emit)),
+      map(term => term),
+      //startWith('1'),
+      debounceTime(2000),
+      distinctUntilChanged(),
+      switchMap(term =>
+        this.getLazySearch(term).pipe(
+          //catchError(err => throwError(err))  // This will fail after 1 error
+          catchError(err => {return of(err)})
+        )
+    )
+    );
+    return serachResult;
+
+  }
+
+  private getLazySearch(searchTerm:string):Observable<any>
   {
     return this.http.get<any>(`https://reqres.in/api/users/${searchTerm}`);
   }

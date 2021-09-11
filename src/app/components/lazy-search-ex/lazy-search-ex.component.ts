@@ -1,6 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, map, startWith, switchMap, tap } from 'rxjs/operators';
+import { of, throwError } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, map, startWith, switchMap, tap } from 'rxjs/operators';
 import { User } from 'src/app/model/User';
 import { RxJsTricksService } from 'src/app/services/rx-js-tricks.service';
 
@@ -19,37 +21,30 @@ export class LazySearchExComponent implements OnInit {
   });
   }
   ngOnInit(): void {
-    
-  
-    this.myForm.controls['searchTerm'].valueChanges.subscribe(value => {
-    console.log(value);
-    this.rx.userId.next(value);
-    this.LazySearch();
-  });
-  
+   this. LazySearch();
   }
 
   LazySearch()
   {
-    const searchObs= this.rx.userId.pipe(
-      tap(emit=>console.log("emitting#"+emit)),
-      map(term => term),
-      //startWith('1'),
-      debounceTime(400)
-      //distinctUntilChanged()
-    ); 
-  
-    const usersObs=searchObs.pipe(
-    switchMap(search => this.rx.getLazySearch(search)) 
-    ).subscribe( item=>
-      {this.user=item as User; console.log(this.user);}
-      /*
-      map(item=>{
-        this.user=item as User;
-        console.log(this.user);
-      })
-        */
-    );
+      this.rx.searchUsingSwitchMap(this.myForm.controls['searchTerm'].valueChanges).subscribe(
+        result=>{//success
+            if(result instanceof HttpErrorResponse)
+            {
+              console.log(result.status)
+            }
+            else
+            {
+              this.user=result as User; 
+              console.log(this.user);
+            }
+        }
+        ,err=>{ // It will never reach in case of switvhMap
+          console.log(err);
+        },
+        ()=>// It will never reach in case of switvhMap
+        {console.log('search complete')}
+      );
+     
   
 
   }
