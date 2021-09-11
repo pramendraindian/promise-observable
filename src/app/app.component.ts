@@ -17,7 +17,7 @@ export class AppComponent  implements OnInit {
   }
   users:User[]=[];
   ngOnInit(): void {
-    this.getUserDetailsById();
+    // this.getUserDetailsById();
     //this.getHttpPromise();
     // this.promiseBasics();
     // this.basicObservable();
@@ -78,19 +78,9 @@ export class AppComponent  implements OnInit {
     finally(()=>console.log("http promise complete"));
   }
 
-  CallUserId(userId:any)
-  {
-   
-    this.rx.userId.next(userId);
-  }
+ 
 
-  getUserDetailsById()
-  {
-    this.rx.getUserById().subscribe(
-     (user) =>  {console.log(user);}
-     ,(err) => {console.log(err);}      
-  );
-  }
+
 
 
   
