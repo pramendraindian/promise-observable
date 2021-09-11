@@ -19,23 +19,24 @@ export class LazySearchExComponent implements OnInit {
   });
   }
   ngOnInit(): void {
-    this.LazySearch();
-  /*
+    
+  
     this.myForm.controls['searchTerm'].valueChanges.subscribe(value => {
     console.log(value);
-    this.rx.getLazySearch(value);
+    this.rx.userId.next(value);
+    this.LazySearch();
   });
-  */
+  
   }
 
   LazySearch()
   {
-    const searchObs= this.myForm.controls['searchTerm'].valueChanges.pipe(
+    const searchObs= this.rx.userId.pipe(
       tap(emit=>console.log("emitting#"+emit)),
       map(term => term),
-      startWith('1'),
-      debounceTime(4000),
-      distinctUntilChanged()
+      //startWith('1'),
+      debounceTime(400)
+      //distinctUntilChanged()
     ); 
   
     const usersObs=searchObs.pipe(
