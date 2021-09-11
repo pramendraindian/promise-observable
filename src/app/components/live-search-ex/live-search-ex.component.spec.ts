@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LazySearchExComponent } from './lazy-search-ex.component';
+import { LiveSearchExComponent } from './live-search-ex.component';
 
 describe('LazySearchExComponent', () => {
-  let component: LazySearchExComponent;
-  let fixture: ComponentFixture<LazySearchExComponent>;
+  let component: LiveSearchExComponent;
+  let fixture: ComponentFixture<LiveSearchExComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LazySearchExComponent ]
+      declarations: [ LiveSearchExComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LazySearchExComponent);
+    fixture = TestBed.createComponent(LiveSearchExComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

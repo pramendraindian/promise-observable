@@ -7,11 +7,11 @@ import { User } from 'src/app/model/User';
 import { RxJsTricksService } from 'src/app/services/rx-js-tricks.service';
 
 @Component({
-  selector: 'app-lazy-search-ex',
-  templateUrl: './lazy-search-ex.component.html',
-  styleUrls: ['./lazy-search-ex.component.css']
+  selector: 'app-live-search-ex',
+  templateUrl: './live-search-ex.component.html',
+  styleUrls: ['./live-search-ex.component.css']
 })
-export class LazySearchExComponent implements OnInit {
+export class LiveSearchExComponent implements OnInit {
   myForm: FormGroup ;
   user:User;
   constructor(private formBuilder:FormBuilder,private rx:RxJsTricksService) { 
