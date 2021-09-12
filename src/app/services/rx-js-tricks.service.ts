@@ -60,22 +60,18 @@ export class RxJsTricksService {
     return forkJoin([response1, response2, response3, response4]);
   }
 
-  mergeMapInsteadOfflatMapCalls() // flatMap is retired use mergeMap instead
+  mergeMapCalls() // flatMap is retired use mergeMap instead
   {
-   return this.http.get<any>(`https://reqres.in/api/users/100`).pipe(
-   catchError(error => of(error)),
+   return of("100","2","3","4","5","6","7").pipe(
+   catchError(error => of(error.status)),
    tap(userDetailsForId1=>console.log(userDetailsForId1)),
-   mergeMap(user=>
-            this.http.get<any>(`https://reqres.in/api/users/2`).pipe(catchError(error => of(error)))
-           ),
-   tap(userDetailsForId2=>console.log(userDetailsForId2)),  
-   mergeMap(user=>
-            this.http.get<any>(`https://reqres.in/api/users/3`).pipe(catchError(error => of(error)))
-           ), 
-   tap(userDetailsForId3=>console.log(userDetailsForId3)),   
-   //only last mergeMap will be available for subscription
+   mergeMap(userId=>
+            this.http.get<any>(`https://reqres.in/api/users/${userId}`).pipe(catchError(error => of(error)))
+           )
      );
    
   }
+
+ 
   
 }

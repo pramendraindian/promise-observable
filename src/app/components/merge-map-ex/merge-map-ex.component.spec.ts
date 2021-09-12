@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FlatMapExComponent } from './flat-map-ex.component';
+import { MergeMapExComponent } from './merge-map-ex.component';
 
 describe('FlatMapExComponent', () => {
-  let component: FlatMapExComponent;
-  let fixture: ComponentFixture<FlatMapExComponent>;
+  let component: MergeMapExComponent;
+  let fixture: ComponentFixture<MergeMapExComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FlatMapExComponent ]
+      declarations: [ MergeMapExComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FlatMapExComponent);
+    fixture = TestBed.createComponent(MergeMapExComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

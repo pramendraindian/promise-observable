@@ -7,7 +7,7 @@ import { ConcatMapExComponent } from './components/concat-map-ex/concat-map-ex.c
 import { LiveSearchExComponent } from './components/live-search-ex/live-search-ex.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ForkJoinExComponent } from './components/fork-join-ex/fork-join-ex.component';
-import { FlatMapExComponent } from './components/flat-map-ex/flat-map-ex.component';
+import { MergeMapExComponent } from './components/merge-map-ex/merge-map-ex.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +15,7 @@ import { FlatMapExComponent } from './components/flat-map-ex/flat-map-ex.compone
     ConcatMapExComponent,
     LiveSearchExComponent,
     ForkJoinExComponent,
-    FlatMapExComponent
+    MergeMapExComponent
   ],
   imports: [
     BrowserModule,
