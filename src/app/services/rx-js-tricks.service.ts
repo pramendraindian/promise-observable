@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
-import { catchError, concatMap, debounceTime, distinctUntilChanged, map, startWith, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, forkJoin, observable, Observable, Observer, of } from 'rxjs';
+import { catchError, concatMap, debounceTime, distinctUntilChanged, flatMap,mergeMap, map, startWith, switchMap, tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -60,6 +60,22 @@ export class RxJsTricksService {
     return forkJoin([response1, response2, response3, response4]);
   }
 
-
-
+  mergeMapInsteadOfflatMapCalls() // flatMap is retired use mergeMap instead
+  {
+   return this.http.get<any>(`https://reqres.in/api/users/100`).pipe(
+   catchError(error => of(error)),
+   tap(userDetailsForId1=>console.log(userDetailsForId1)),
+   mergeMap(user=>
+            this.http.get<any>(`https://reqres.in/api/users/2`).pipe(catchError(error => of(error)))
+           ),
+   tap(userDetailsForId2=>console.log(userDetailsForId2)),  
+   mergeMap(user=>
+            this.http.get<any>(`https://reqres.in/api/users/3`).pipe(catchError(error => of(error)))
+           ), 
+   tap(userDetailsForId3=>console.log(userDetailsForId3)),   
+   //only last mergeMap will be available for subscription
+     );
+   
+  }
+  
 }
